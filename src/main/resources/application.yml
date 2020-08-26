@@ -1,9 +1,3 @@
-test:
-  #  hostport: httpbin.org:80
-  #  hostport: localhost:5000
-  #  uri: http://${test.hostport}
-  uri: lb://httpbin
-
 server:
   port : 9998
 
@@ -12,27 +6,11 @@ spring:
     enabled: false
   cloud:
     gateway:
-      default-filters:
-      - PrefixPath=/httpbin
-      - AddResponseHeader=X-Response-Default-Foo, Default-Bar
-
       routes:
-      # =====================================
-      # to run server
-      # $ wscat --listen 9000
-      # to run client
-      # $ wscat --connect ws://localhost:8080/echo
-      - id: websocket_test
-        uri: ws://localhost:9000
-        order: 9000
-        predicates:
-        - Path=/echo
-      # =====================================
-      - id: default_path_to_httpbin
-        uri: ${test.uri}
-        order: 10000
-        predicates:
-        - Path=/**
+        - id: bns-kr
+          uri: http://local.com:9999
+          predicates:
+            - Path=/local/v1.0/**
 
 logging:
   level:
